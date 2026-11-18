@@ -2,224 +2,470 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>家具履歷 原型</title>
+<meta name="description" content="家具履歷 Furniture Passport：2026 永續智慧創新黑客松 3-ME IKEA 命題｜Proof to zero 可點擊原型（示範資料）">
 <style>
-:root{--ink:#1f2a25;--sub:#5d6a63;--line:#dde5df;--bg:#f3f6f2;--g:#1d6e4e;--g2:#2f9a6b;--gbg:#e4f2ea;--wood:#9c6a40;--woodbg:#f6ede3;--y:#e9a92b;--ybg:#fff4da;--r:#ad3f2c;--rbg:#fbebe7;--b:#1f5f99;--bbg:#e7eff8}
-*{box-sizing:border-box}
-html,body{margin:0;background:#dfe7e2;font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink)}
-.wrap{max-width:420px;margin:0 auto;min-height:100vh;background:#fff;position:relative;display:flex;flex-direction:column}
-header{background:var(--g);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
-header button{background:none;border:0;color:#fff;font-size:20px;cursor:pointer;padding:0 4px}
-header .t{font-weight:800;font-size:17px;flex:1}
-header .role{font-size:11px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px}
-main{padding:14px 16px 90px;flex:1}
-.scr{display:none}.scr.on{display:block}
-h2{font-size:18px;margin:4px 0 10px}
-p{line-height:1.55;margin:0 0 10px}
-.small{font-size:12.5px;color:var(--sub);line-height:1.5}
-.card{border:1px solid var(--line);border-radius:14px;padding:12px;margin:0 0 10px;background:#fff}
-.item{display:flex;gap:12px;align-items:center;background:var(--woodbg);border-radius:14px;padding:12px;margin-bottom:12px}
-.img{width:58px;height:58px;border-radius:12px;background:linear-gradient(135deg,#d3ab80,#8b5e3b);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:26px}
-.ev{border-left:4px solid var(--g2);padding:6px 0 6px 10px;margin:8px 0}
-.ev .who{font-weight:800;color:var(--g)}
-.ev .who.self{color:var(--wood)}
-.ev .h{font-family:ui-monospace,Consolas,monospace;font-size:10.5px;color:#8a978f;word-break:break-all}
-.ev.bad{border-color:var(--r);background:var(--rbg)}
-.ev.bad .who{color:var(--r)}
-.btn{display:block;width:100%;border:0;border-radius:12px;padding:13px;font-size:15.5px;font-weight:800;cursor:pointer;margin:8px 0;font-family:inherit}
-.btn.p{background:var(--y);color:#3d2a00}
-.btn.g{background:var(--gbg);color:var(--g)}
-.btn.d{background:var(--g);color:#fff}
-.btn.r{background:var(--rbg);color:var(--r)}
-.shots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-.shot{height:92px;border-radius:12px;border:2px dashed #c9b49b;background:#faf6f1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;color:var(--wood);cursor:pointer;text-align:center}
-.shot.ok{border:0;background:linear-gradient(135deg,#d8c0a5,#a77b52);color:#fff;text-shadow:0 0 3px #0008}
-.q{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
-.seg{display:flex;gap:4px}
-.seg button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-size:13px;cursor:pointer;font-family:inherit}
-.seg button.on{background:var(--g);color:#fff;border-color:var(--g)}
-.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
-.tag{font-weight:800}.ok{color:var(--g)}.warn{color:#b07400}.bad{color:var(--r)}
-.price{background:var(--g);color:#fff;border-radius:14px;padding:14px;margin:10px 0}
-.price .big{font-size:28px;font-weight:900;margin:2px 0}
-.price .small{color:#d6eee1}
-.tier{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
-.tier div{border-radius:10px;padding:7px 4px;text-align:center;background:var(--bg);font-size:12px;border:2px solid transparent}
-.tier div b{display:block;font-size:16px}
-.tier div.on{border-color:var(--g);background:var(--gbg)}
-.badge{display:inline-block;border-radius:8px;padding:2px 8px;font-size:12px;font-weight:800}
-.badge.g{background:var(--gbg);color:var(--g)}.badge.y{background:var(--ybg);color:#8a6100}.badge.r{background:var(--rbg);color:var(--r)}
-.alert{border-radius:12px;padding:10px 12px;margin:10px 0;font-size:14px;line-height:1.5}
-.alert.g{background:var(--gbg);color:#14553b}.alert.r{background:var(--rbg);color:var(--r)}.alert.y{background:var(--ybg);color:#6b4d00}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#fff;border-top:1px solid var(--line);display:flex;z-index:6}
-nav button{flex:1;border:0;background:none;padding:9px 0 11px;font-size:11.5px;color:var(--sub);cursor:pointer;font-family:inherit}
-nav button span{display:block;font-size:19px}
+:root{
+  --ink:#1c2621;--sub:#5b6861;--line:#e1e8e3;--bg:#f4f7f5;--card:#fff;
+  --g:#1d6e4e;--g2:#2f9a6b;--g3:#6cc49a;--gbg:#e6f4ec;--gdk:#123d2c;
+  --wood:#9a6a40;--wood2:#c99a6b;--woodbg:#f7efe5;
+  --y:#efb02e;--ybg:#fff4d9;--r:#b2412d;--rbg:#fdece8;
+  --sh:0 1px 2px rgba(18,61,44,.06),0 6px 18px rgba(18,61,44,.08);
+  --ease:cubic-bezier(.22,.8,.24,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink);background:#eaf1ec}
+button{font-family:inherit}
+.stage{min-height:100%;display:flex;align-items:center;justify-content:center;gap:56px;padding:32px;
+  background:radial-gradient(1200px 600px at 15% 10%,#d9efe2 0,transparent 60%),radial-gradient(900px 600px at 90% 90%,#f3e6d6 0,transparent 60%),#eef4f0}
+.guide{width:400px;max-width:40vw}
+.brand{display:flex;align-items:center;gap:10px;color:var(--g);font-weight:800;letter-spacing:.5px;font-size:13px}
+.brand .dot{width:30px;height:30px;border-radius:9px;background:var(--g);display:grid;place-items:center;color:#fff;font-size:15px}
+.guide h1{font-size:40px;margin:14px 0 4px;letter-spacing:3px;color:var(--gdk)}
+.guide .en{letter-spacing:3px;color:var(--sub);font-size:13px}
+.guide .lead{margin:14px 0 18px;line-height:1.7;color:#33413a}
+.steps{list-style:none;margin:0;padding:0;position:relative}
+.steps:before{content:"";position:absolute;left:15px;top:14px;bottom:14px;width:2px;background:var(--line)}
+.steps li{position:relative}
+.steps button{display:flex;gap:12px;align-items:center;width:100%;border:0;background:none;padding:7px 8px;border-radius:12px;cursor:pointer;text-align:left;color:var(--sub);font-size:14.5px;transition:background .25s,color .25s}
+.steps button:hover{background:rgba(255,255,255,.6)}
+.steps .n{width:16px;height:16px;flex:0 0 auto;border-radius:50%;background:#fff;border:2px solid #c9d6ce;margin-left:7px;transition:all .3s var(--ease);position:relative;z-index:1}
+.steps button.done .n{background:var(--g3);border-color:var(--g3)}
+.steps button.on{background:#fff;color:var(--ink);font-weight:700;box-shadow:var(--sh)}
+.steps button.on .n{background:var(--g);border-color:var(--g);transform:scale(1.25);box-shadow:0 0 0 5px rgba(29,110,78,.15)}
+.note{margin-top:16px;background:#fff;border-radius:16px;padding:14px 16px;box-shadow:var(--sh);min-height:112px}
+.note .tag{display:inline-block;font-size:12px;font-weight:800;color:var(--g);background:var(--gbg);border-radius:20px;padding:2px 10px;margin-bottom:6px}
+.note p{margin:0;line-height:1.65;font-size:14.5px}
+.note.swap{animation:fadeUp .4s var(--ease)}
+.ctrl{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.ctrl button{border:0;border-radius:12px;padding:10px 16px;font-weight:800;cursor:pointer;font-size:14px;transition:transform .15s,box-shadow .2s}
+.ctrl button:active{transform:scale(.96)}
+.ctrl .play{background:var(--g);color:#fff;box-shadow:0 6px 16px rgba(29,110,78,.3)}
+.ctrl .ghost{background:#fff;color:var(--g);box-shadow:var(--sh)}
+.foot{margin-top:14px;font-size:12px;color:#6e7b74;line-height:1.6}
+.device{width:392px;height:820px;max-height:calc(100vh - 32px);border-radius:52px;background:#16201b;padding:12px;box-shadow:0 30px 70px rgba(18,61,44,.28),inset 0 0 0 2px #2c3a33;position:relative;flex:0 0 auto}
+.device:before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:110px;height:28px;border-radius:20px;background:#0b110e;z-index:20}
+.app{width:100%;height:100%;border-radius:41px;overflow:hidden;background:var(--bg);position:relative;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,var(--gdk),var(--g));color:#fff;padding:52px 16px 14px;display:flex;align-items:center;gap:8px;position:relative;z-index:5;flex:0 0 auto}
+@media (max-width:900px){
+  .stage{padding:0;display:block;background:var(--bg)}
+  .guide{display:none}
+  .device{width:100%;height:100dvh;max-height:none;border-radius:0;padding:0;box-shadow:none;background:none}
+  .device:before{display:none}
+  .app{border-radius:0}
+  header{padding-top:max(14px,env(safe-area-inset-top))}
+}
+header .back{width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;transition:opacity .25s,transform .25s}
+header .back.hide{opacity:0;transform:translateX(-8px);pointer-events:none}
+header .t{font-weight:800;font-size:18px;flex:1;letter-spacing:.5px}
+header .t span{display:inline-block;animation:fadeUp .35s var(--ease)}
+header .role{font-size:11.5px;background:rgba(255,255,255,.16);border-radius:20px;padding:3px 10px;transition:background .3s}
+header .role.staff{background:var(--y);color:#3d2a00;font-weight:800}
+header .role.buyer{background:#cfe6ff;color:#18406b;font-weight:800}
+.viewport{position:relative;flex:1;overflow:hidden}
+.scr{position:absolute;inset:0;overflow-y:auto;padding:16px 16px 96px;display:none;scrollbar-width:none}
+.scr::-webkit-scrollbar{display:none}
+.scr.on{display:block}
+.scr.in-f{animation:inF .42s var(--ease)}
+.scr.in-b{animation:inB .42s var(--ease)}
+.scr.out-f{display:block;animation:outF .42s var(--ease) forwards;pointer-events:none}
+.scr.out-b{display:block;animation:outB .42s var(--ease) forwards;pointer-events:none}
+@keyframes inF{from{transform:translateX(100%);opacity:.4}to{transform:none;opacity:1}}
+@keyframes inB{from{transform:translateX(-30%);opacity:0}to{transform:none;opacity:1}}
+@keyframes outF{to{transform:translateX(-30%);opacity:0}}
+@keyframes outB{to{transform:translateX(100%);opacity:.4}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.scr.on .stg>*{animation:fadeUp .45s var(--ease) both}
+.scr.on .stg>*:nth-child(2){animation-delay:.05s}.scr.on .stg>*:nth-child(3){animation-delay:.1s}.scr.on .stg>*:nth-child(4){animation-delay:.15s}.scr.on .stg>*:nth-child(5){animation-delay:.2s}.scr.on .stg>*:nth-child(6){animation-delay:.25s}.scr.on .stg>*:nth-child(7){animation-delay:.3s}.scr.on .stg>*:nth-child(8){animation-delay:.35s}
+nav{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-radius:22px;box-shadow:0 8px 24px rgba(18,61,44,.14);display:flex;z-index:6;padding:6px}
+nav .ind{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/4);border-radius:16px;background:var(--gbg);transition:transform .4s var(--ease)}
+nav button{flex:1;border:0;background:none;padding:6px 0 5px;font-size:11.5px;color:var(--sub);cursor:pointer;position:relative;z-index:1;transition:color .3s}
+nav button span{display:block;font-size:19px;transition:transform .3s var(--ease)}
 nav button.on{color:var(--g);font-weight:800}
-.mask{filter:blur(4px)}
-input[type=range]{width:100%}
-.note{font-size:11px;color:#8a978f;text-align:center;margin-top:16px}
+nav button.on span{transform:translateY(-2px) scale(1.12)}
+h2{font-size:19px;margin:2px 0 6px}
+p{line-height:1.6;margin:0 0 10px}
+.small{font-size:12.5px;color:var(--sub);line-height:1.55}
+.card{background:var(--card);border-radius:18px;padding:14px;margin:0 0 12px;box-shadow:var(--sh)}
+.btn{position:relative;overflow:hidden;display:block;width:100%;border:0;border-radius:15px;padding:14px;font-size:15.5px;font-weight:800;cursor:pointer;margin:10px 0;transition:transform .15s var(--ease),box-shadow .25s,filter .2s,opacity .3s}
+.btn:active{transform:scale(.97)}
+.btn.p{background:linear-gradient(135deg,#f6c046,var(--y));color:#3d2a00;box-shadow:0 8px 18px rgba(239,176,46,.35)}
+.btn.g{background:var(--gbg);color:var(--g)}
+.btn.d{background:linear-gradient(135deg,var(--g2),var(--g));color:#fff;box-shadow:0 8px 18px rgba(29,110,78,.3)}
+.btn.r{background:var(--rbg);color:var(--r)}
+.btn[disabled]{opacity:.45;box-shadow:none;cursor:not-allowed}
+.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+.badge{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:12px;font-weight:800}
+.badge.g{background:var(--gbg);color:var(--g)}.badge.y{background:var(--ybg);color:#8a6100}.badge.r{background:var(--rbg);color:var(--r)}
+.badge.popin{animation:pop .45s var(--ease)}
+.fl{display:flex;gap:12px;align-items:center;background:#fff;border-radius:18px;padding:12px;margin-bottom:10px;box-shadow:var(--sh);cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s;border:2px solid transparent}
+.fl:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(18,61,44,.12)}
+.fl.hot{border-color:var(--g3)}
+.fl .ic{width:58px;height:58px;border-radius:14px;background:var(--woodbg);display:grid;place-items:center;flex:0 0 auto}
+.fl .ic svg{width:44px;height:44px}
+.fl b{display:block;font-size:15.5px}
+.fl .go{margin-left:auto;color:var(--g);font-size:20px}
+.hero{background:linear-gradient(160deg,var(--woodbg),#fff);border-radius:22px;padding:16px;box-shadow:var(--sh);margin-bottom:12px;display:flex;gap:14px;align-items:center}
+.hero>div:first-child svg{width:84px;height:96px;filter:drop-shadow(0 6px 8px rgba(120,80,40,.25))}
+.hero b{font-size:17px}
+.tl{position:relative;padding-left:22px;margin:4px 0 6px}
+.tl:before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.ev{position:relative;background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:9px;box-shadow:var(--sh);transition:background .3s,box-shadow .3s}
+.ev:before{content:"";position:absolute;left:-19px;top:14px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #c9d6ce;transition:all .3s}
+.ev.ok:before{border-color:var(--g2);background:var(--g2)}
+.ev.chk:before{border-color:var(--y);background:var(--y);box-shadow:0 0 0 5px rgba(239,176,46,.25)}
+.ev.bad{background:#fff4f1;box-shadow:0 0 0 2px #f0b9ab}
+.ev.bad:before{border-color:var(--r);background:var(--r)}
+.ev.bad.sh{animation:shake .5s}
+.ev .who{font-weight:800;color:var(--g)}
+.ev.bad .who{color:var(--r)}
+.ev .h{font-family:ui-monospace,Consolas,monospace;font-size:10.5px;color:#93a099;word-break:break-all;margin-top:3px;line-height:1.5}
+.ev .why{color:var(--r);font-weight:800;font-size:12.5px;margin-top:3px}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.shot{height:112px;border-radius:16px;border:2px dashed #d3bfa5;background:#fbf7f2;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;color:var(--wood);cursor:pointer;position:relative;overflow:hidden;transition:transform .2s var(--ease),border-color .3s}
+.shot:hover{transform:scale(1.02)}
+.shot .cam{font-size:24px;margin-bottom:2px}
+.shot.ok{border:0;background:linear-gradient(160deg,#efe2d1,#d7bc9a)}
+.shot.ok svg{width:70%;height:80%;animation:pop .45s var(--ease)}
+.shot .lab{position:absolute;left:8px;bottom:6px;background:rgba(0,0,0,.45);color:#fff;font-size:11px;border-radius:8px;padding:1px 7px}
+.shot .flash{position:absolute;inset:0;background:#fff;animation:flash .45s ease-out forwards;pointer-events:none}
+@keyframes flash{from{opacity:1}to{opacity:0}}
+.prog{height:6px;border-radius:4px;background:var(--line);overflow:hidden;margin:4px 0 10px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--g3),var(--g));transition:width .45s var(--ease)}
+.q{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.seg{display:flex;background:var(--bg);border-radius:12px;padding:3px;position:relative}
+.seg button{border:0;background:none;border-radius:9px;padding:6px 12px;font-size:13px;cursor:pointer;position:relative;z-index:1;transition:color .3s;color:var(--sub)}
+.seg button.on{color:#fff;font-weight:800}
+.seg .knob{position:absolute;top:3px;bottom:3px;left:3px;width:44px;border-radius:9px;background:var(--g);transition:transform .35s var(--ease),width .35s var(--ease);box-shadow:0 3px 8px rgba(29,110,78,.3)}
+.scan{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.scan div{height:62px;border-radius:12px;background:linear-gradient(160deg,#efe2d1,#d7bc9a);display:grid;place-items:center;overflow:hidden}
+.scan svg{width:70%;height:80%}
+.scan .beam{position:absolute;left:-4px;right:-4px;top:0;height:22px;background:linear-gradient(180deg,transparent,rgba(108,196,154,.75),transparent);border-radius:8px;animation:beam 1.1s ease-in-out 2;pointer-events:none;opacity:0}
+@keyframes beam{0%{top:-10px;opacity:1}50%{top:48px;opacity:1}100%{top:-10px;opacity:1}}
+.row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px;transition:opacity .3s}
+.row.wait{opacity:.35}
+.row .v{font-weight:800;display:flex;align-items:center;gap:6px}
+.row .v:before{content:"";width:12px;height:12px;border-radius:50%;border:2px solid #cfd8d3;border-top-color:var(--g);animation:spin .8s linear infinite;display:inline-block}
+.row.done .v:before{content:"✓";animation:pop .35s var(--ease);border:0;width:auto;height:auto;color:var(--g)}
+.row.done.warn .v:before{content:"!";color:#b07400}
+.row.done.bad .v:before{content:"✕";color:var(--r)}
+.row.wait .v{visibility:hidden}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ok{color:var(--g)}.warn{color:#b07400}.bad{color:var(--r)}
+.result{border-radius:16px;padding:12px 14px;background:var(--gbg);display:flex;justify-content:space-between;align-items:center;opacity:0;transform:translateY(8px);transition:all .45s var(--ease)}
+.result.show{opacity:1;transform:none}
+.price{background:linear-gradient(150deg,var(--gdk),var(--g) 70%,var(--g2));color:#fff;border-radius:22px;padding:18px;display:flex;gap:14px;align-items:center;box-shadow:0 14px 28px rgba(18,61,44,.28);position:relative;overflow:hidden}
+.price:after{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.07)}
+.gauge{width:84px;height:84px;flex:0 0 auto;position:relative}
+.gauge svg{transform:rotate(-90deg)}
+.gauge circle{fill:none;stroke-width:9}
+.gauge .bgc{stroke:rgba(255,255,255,.18)}
+.gauge .fg{stroke:var(--y);stroke-linecap:round;transition:stroke-dashoffset .9s var(--ease)}
+.gauge b{position:absolute;inset:0;display:grid;place-items:center;font-size:18px}
+.price .lbl{font-size:12.5px;color:#cfe9da}
+.price .big{font-size:31px;font-weight:900;letter-spacing:.5px;font-variant-numeric:tabular-nums}
+.tier{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 6px}
+.tier div{border-radius:14px;padding:9px 4px;text-align:center;background:#fff;font-size:12px;border:2px solid transparent;cursor:pointer;box-shadow:var(--sh);transition:all .3s var(--ease);color:var(--sub)}
+.tier div b{display:block;font-size:17px;color:var(--ink)}
+.tier div.on{border-color:var(--g);background:var(--gbg);transform:translateY(-3px);color:var(--g)}
+.tier div.on b{color:var(--g)}
+.why .row:last-child{border:0}
+.opt{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:18px;padding:14px;margin-bottom:10px;box-shadow:var(--sh);border:2px solid transparent;transition:all .25s var(--ease);cursor:pointer}
+.opt:hover{transform:translateY(-2px)}
+.opt.sel{border-color:var(--g);background:#f7fcf9}
+.opt .ic{font-size:24px;width:44px;height:44px;border-radius:12px;background:var(--bg);display:grid;place-items:center;flex:0 0 auto}
+.opt b{display:block;font-size:15px}
+.opt .soon{font-size:11px;background:var(--bg);color:var(--sub);border-radius:8px;padding:1px 7px;margin-left:6px;font-weight:700}
+.slots{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.slots span{border:1.5px solid var(--line);border-radius:10px;padding:5px 9px;font-size:12.5px;cursor:pointer;transition:all .2s}
+.slots span.on{background:var(--g);border-color:var(--g);color:#fff}
+.alert{border-radius:14px;padding:11px 13px;margin:10px 0;font-size:13.5px;line-height:1.55}
+.alert.g{background:var(--gbg);color:#14553b}.alert.r{background:var(--rbg);color:var(--r)}.alert.y{background:var(--ybg);color:#6b4d00}
+.alert.popin{animation:pop .45s var(--ease)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.kpis div{background:#fff;border-radius:14px;padding:9px;text-align:center;box-shadow:var(--sh)}
+.kpis b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.kpis span{font-size:11.5px;color:var(--sub)}
+.stamp{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:30;background:rgba(18,61,44,.08)}
+.stamp div{border:4px solid var(--r);color:var(--r);border-radius:16px;padding:10px 18px;font-size:26px;font-weight:900;transform:rotate(-12deg) scale(2.4);opacity:0;background:rgba(255,255,255,.9);animation:stamp .55s var(--ease) forwards}
+@keyframes stamp{to{transform:rotate(-12deg) scale(1);opacity:1}}
+.toast{position:absolute;left:50%;top:96px;transform:translate(-50%,-20px);background:var(--gdk);color:#fff;padding:10px 16px;border-radius:14px;font-size:13.5px;z-index:40;opacity:0;transition:all .35s var(--ease);max-width:88%;box-shadow:0 10px 24px rgba(0,0,0,.25);pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:900px){.toast{top:70px}}
+.foot-note{font-size:11px;color:#8b978f;text-align:center;margin-top:18px}
+.noanim *,.noanim *:before,.noanim *:after{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header><button id="back" onclick="back()">‹</button><div class="t" id="title">我的家具履歷</div><div class="role" id="role">消費者</div></header>
-<main>
+<div class="stage">
+  <aside class="guide">
+    <div class="brand"><div class="dot">✓</div>Proof to zero｜2026 永續智慧創新黑客松 3-ME</div>
+    <h1>家具履歷</h1>
+    <div class="en">FURNITURE PASSPORT ・ 可點擊原型</div>
+    <p class="lead">讓每件家具的過去有憑有據：購買、維修、驗收都由負責的人簽章；在家拍照就知道收不收、值多少，最後由店員確認。</p>
+    <ol class="steps" id="steps"></ol>
+    <div class="note" id="note"><span class="tag">說明</span><p></p></div>
+    <div class="ctrl"><button class="play" id="playBtn" onclick="autoplay()">▶ 自動示範</button><button class="ghost" onclick="step(-1)">← 上一步</button><button class="ghost" onclick="step(1)">下一步 →</button></div>
+    <div class="foot">畫面資料為示範。簽章（ECDSA）與雜湊串接在瀏覽器中實際計算；照片評分為示範結果。回購比例參考 IKEA 英國、愛爾蘭公開條件，台灣比例待與 IKEA 確認。鍵盤 ← → 可切換步驟。</div>
+  </aside>
 
-<!-- 1 履歷 -->
-<section class="scr" id="s-home" data-t="我的家具履歷" data-r="消費者">
-  <div class="item"><div class="img">📚</div><div><b style="font-size:16px">兒童書櫃（範例）</b><div class="small">品號 000.000.00｜2023/03 購入｜IKEA 台中店</div><span class="badge g" id="chainBadge">✓ 紀錄完整、未被改動</span></div></div>
-  <div id="events"></div>
-  <button class="btn p" onclick="go('s-photo')">我想換掉這件</button>
-  
-  <button class="btn g" onclick="toast('已預約台中店家具修理服務（示範）')">預約維修</button>
-  <p class="note">原型示範資料｜Proof to zero｜2026 永續智慧創新黑客松</p>
+  <div class="device"><div class="app" id="app">
+    <header><button class="back hide" id="back" onclick="back()">‹</button><div class="t" id="title"><span>我的 IKEA 家具</span></div><div class="role" id="role">消費者</div></header>
+    <div class="viewport">
+
+<section class="scr on" id="s-find" data-t="我的 IKEA 家具" data-r="消費者">
+ <div class="stg">
+  <p class="small">舊家具沒有 QR 也沒關係。從 IKEA Family 會員購買紀錄選一件，就能建立履歷（購買紀錄由門市簽章）。</p>
+  <div class="fl hot" onclick="go('s-home')"><div class="ic" data-svg="shelf"></div><div><b>兒童書櫃</b><span class="small">2023/03/12｜台中店</span></div><div class="go">›</div></div>
+  <div class="fl" onclick="toast('示範：此品項尚未建立履歷')"><div class="ic" data-svg="chair"></div><div><b>兒童椅 ×2</b><span class="small">2023/03/12｜台中店</span></div><div class="go">›</div></div>
+  <div class="fl" onclick="toast('示範：此品項尚未建立履歷')"><div class="ic" data-svg="rack"></div><div><b>收納層架</b><span class="small">2021/08/30｜台中店</span></div><div class="go">›</div></div>
+  <div class="card" style="background:#f9fbfa"><b>找不到購買紀錄？</b><div class="small">可以輸入品名自行補登，履歷會標示「未經門市簽章」，估價會比較保守。</div></div>
+  <div class="small">🏷️ QR 標籤在第一次到店驗收時由店員貼上，之後轉手掃 QR 就能看到履歷。</div>
+ </div>
 </section>
 
-<!-- 2 拍照＋自評 -->
+<section class="scr" id="s-home" data-t="家具履歷" data-r="消費者">
+ <div class="stg">
+  <div class="hero"><div data-svg="shelf"></div><div><b>兒童書櫃（範例）</b><div class="small">品號 000.000.00｜2023/03 購入<br>IKEA 台中店</div><span class="badge g" id="chainBadge">✓ 紀錄完整、未被改動</span></div></div>
+  <div class="tl" id="events"></div>
+  <button class="btn p" onclick="go('s-photo')">我想換掉這件</button>
+  <button class="btn g" onclick="toast('已預約台中店家具修理服務（示範）')">預約維修</button>
+  <p class="foot-note">原型示範資料｜Proof to zero</p>
+ </div>
+</section>
+
 <section class="scr" id="s-photo" data-t="拍照評估" data-r="消費者">
-  <p class="small">請依提示拍 4 個角度。只拍家具本身，避免拍到家人或門牌。</p>
+ <div class="stg">
+  <p class="small">依提示拍 4 個角度。只拍家具本身，避免拍到家人或門牌。</p>
+  <div class="prog"><i id="shotProg"></i></div>
   <div class="shots" id="shots"></div>
   <div class="card">
     <b>3 個簡單問題</b><div class="small">照片看不出來的，請你自己檢查</div>
-    <div class="q"><span>輕推會不會搖晃？</span><div class="seg" data-k="wobble"><button class="on">不會</button><button>有點</button></div></div>
-    <div class="q"><span>零件、螺絲都還在？</span><div class="seg" data-k="parts"><button class="on">都在</button><button>缺</button></div></div>
-    <div class="q"><span>可以自己載到店嗎？</span><div class="seg" data-k="carry"><button class="on">可以</button><button>不行</button></div></div>
+    <div class="q"><span>輕推會不會搖晃？</span><div class="seg" data-k="wobble"><div class="knob"></div><button class="on">不會</button><button>有點</button></div></div>
+    <div class="q"><span>零件、層板都還在？</span><div class="seg" data-k="parts"><div class="knob"></div><button class="on">都在</button><button>缺</button></div></div>
+    <div class="q" style="border:0"><span>可以組好載到店嗎？</span><div class="seg" data-k="carry"><div class="knob"></div><button class="on">可以</button><button>不行</button></div></div>
   </div>
-  <button class="btn d" id="evalBtn" onclick="evaluate()" disabled style="opacity:.5">送出評估（拍完 4 張才可送出）</button>
+  <button class="btn d" id="evalBtn" onclick="evaluate()" disabled>拍完 4 張才可送出</button>
+ </div>
 </section>
 
-<!-- 3 AI 評分 -->
 <section class="scr" id="s-ai" data-t="AI 評分表" data-r="消費者">
-  <div class="alert y">AI 只依評分表逐項判斷，<b>不決定價格</b>。價格由 IKEA 的回購規則計算，最後由店員看實品確認。</div>
+ <div class="stg">
+  <div class="alert y">AI 只依評分表逐項判斷，<b>不決定價格</b>。價格由回購規則計算，最後由店員看實品確認。</div>
+  <div class="scan" id="scan"><div data-svg="shelf"></div><div data-svg="shelfside"></div><div data-svg="shelfback"></div><div data-svg="bolt"></div><i class="beam" id="beam"></i></div>
   <div class="card" id="aiRows"></div>
-  <div class="card"><div class="row"><span>狀況分級</span><span class="tag ok" id="aiTier">很好（輕微刮痕）</span></div>
-    <div class="small" style="margin-top:6px">分流結果：<span id="aiRoute" class="badge g">建議收購</span></div></div>
-  <button class="btn d" onclick="go(window._reject?'s-no':'s-price')">看下一步</button>
+  <div class="result" id="aiRes"><div><div class="small">狀況分級</div><b id="aiTier">很好（輕微刮痕）</b></div><span id="aiRoute" class="badge g">建議收購</span></div>
+  <button class="btn d" id="aiNext" onclick="go(window._reject?'s-no':'s-price')" style="opacity:0">看下一步</button>
+ </div>
 </section>
 
-<!-- 4 價格 -->
 <section class="scr" id="s-price" data-t="預估結果" data-r="消費者">
-  <div class="price"><div class="small">預估回購金（IKEA 抵用金）</div><div class="big" id="pBig">NT$ 1,006</div><div class="small" id="pWhy">原價 NT$2,500 × 很好 35%｜會員再加 15%</div></div>
-  <div class="tier" id="tiers"><div data-i="0"><b>45%</b>全新<br>無刮痕</div><div data-i="1" class="on"><b>35%</b>很好<br>輕微刮痕</div><div data-i="2"><b>25%</b>常用<br>多處刮痕</div></div>
-  <div class="small">分級比例參考 IKEA 英國、愛爾蘭公開的回購條件；台灣實際比例需與 IKEA 確認。</div>
-  <div class="card" style="margin-top:10px"><b>為什麼是這個價格？</b>
-    <div class="row"><span>年限</span><span>3 年（IKEA 訂單紀錄）</span></div>
-    <div class="row"><span>維修</span><span>1 次（台中店修理服務簽署）</span></div>
+ <div class="stg">
+  <div class="price"><div class="gauge"><svg width="84" height="84"><circle class="bgc" cx="42" cy="42" r="36"/><circle class="fg" id="gFg" cx="42" cy="42" r="36" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg><b id="gPct">35%</b></div>
+   <div><div class="lbl">預估回購金（IKEA 抵用金）</div><div class="big" id="pBig">NT$ 1,006</div><div class="lbl" id="pWhy">原價 NT$2,500 × 很好 35% × 會員 1.15</div></div></div>
+  <div class="tier" id="tiers"><div data-i="0"><b>45%</b>全新・無刮痕</div><div data-i="1" class="on"><b>35%</b>很好・輕微刮痕</div><div data-i="2"><b>25%</b>常用・多處刮痕</div></div>
+  <div class="small">點選分級可比較金額。比例參考 IKEA 英國、愛爾蘭公開回購條件；最終以店員檢查實品為準。</div>
+  <div class="card why" style="margin-top:12px"><b>為什麼是這個價格？</b>
+    <div class="row"><span>年限</span><span>3 年（門市購買紀錄）</span></div>
+    <div class="row"><span>維修</span><span>1 次（台中店修理服務簽章）</span></div>
     <div class="row"><span>狀況</span><span id="whyTier">很好（照片＋自評）</span></div></div>
   <button class="btn p" onclick="go('s-book')">選擇送件方式</button>
-  <button class="btn g" onclick="go('s-no')">不想賣／不收的話怎麼辦？</button>
+  <button class="btn g" onclick="go('s-no')">不想賣？看看其他去處</button>
+ </div>
 </section>
 
-<!-- 4b 送件方式 -->
 <section class="scr" id="s-book" data-t="送件方式" data-r="消費者">
-  <p class="small">預估「建議收購」才會請你送件，避免載到店才被拒收。</p>
-  <div class="card"><b>🚗 自己載到台中店收貨點</b><div class="small">試辦期主要方式。請以<b>組好</b>的狀態送件（IKEA 海外回購規定只收組好、功能完整的家具）。</div><button class="btn p" onclick="toast('已預約 11/23（一）14:00 台中店收貨點（示範）');go('s-staff')">預約時段</button></div>
-  <div class="card"><b>🛋️ 買新收舊</b><div class="small">訂購新家具時，配送人員順路把舊的載回（規劃中，需 IKEA 評估）。</div></div>
-  <div class="card"><b>🚚 到府收件</b><div class="small">大件家具（衣櫃、沙發）列入第二階段評估。</div></div>
-  <div class="alert y">到店後若店員判定不收，可以當場轉到捐贈或再使用管道，不用再載回家（規劃中）。</div>
+ <div class="stg">
+  <p class="small">只有「建議收購」才請你送件，避免載到店才被拒收。</p>
+  <div class="opt sel" onclick="selOpt(this)"><div class="ic">🚗</div><div><b>自己載到台中店收貨點</b><div class="small">請以<b>組好</b>的狀態送件（IKEA 英國回購規定只收組好、功能完整的家具）。</div>
+    <div class="slots" id="slots"><span>11/23（一）10:00</span><span class="on">11/23（一）14:00</span><span>11/24（二）19:00</span></div></div></div>
+  <div class="opt" onclick="toast('規劃中：需 IKEA 評估')"><div class="ic">🛋️</div><div><b>買新收舊<span class="soon">規劃中</span></b><div class="small">訂購新家具時，配送人員順路把舊的載回。</div></div></div>
+  <div class="opt" onclick="toast('第二階段評估')"><div class="ic">🚚</div><div><b>到府收件<span class="soon">第二階段</span></b><div class="small">大件家具（衣櫃、沙發）之後評估。</div></div></div>
+  <button class="btn p" onclick="book()">確認預約</button>
+  <div class="small">到店仍判定不收時，可選擇載回，或交由合作的在地再使用單位定期到店收取（規劃中）。</div>
+ </div>
 </section>
 
-<!-- 1b 沒有 QR：從購買紀錄找 -->
-<section class="scr on" id="s-find" data-t="從購買紀錄找家具" data-r="消費者">
-  <p class="small">家裡的舊家具沒有 QR？登入 IKEA Family 會員，從購買紀錄選一件，就能建立履歷（購買紀錄由 IKEA 簽署）。</p>
-  <div class="card" onclick="go('s-home')" style="cursor:pointer"><div class="row"><span>📚 兒童書櫃</span><span class="small">2023/03/12 台中店</span></div></div>
-  <div class="card"><div class="row"><span>🪑 兒童椅 ×2</span><span class="small">2023/03/12 台中店</span></div></div>
-  <div class="card"><div class="row"><span>🗄️ 收納層架</span><span class="small">2021/08/30 台中店</span></div></div>
-  <div class="card" style="background:var(--bg)"><b>找不到購買紀錄？</b><div class="small">可以輸入品名自行補登，履歷會標示「未經 IKEA 簽署」，估價區間會比較寬。</div></div>
-  <div class="small">QR 標籤在第一次到店驗收時由店員貼上，之後轉手時掃 QR 就能看到履歷。</div>
-</section>
-
-<!-- 5 不收的去處 -->
 <section class="scr" id="s-no" data-t="其他去處" data-r="消費者">
+ <div class="stg">
   <p>不用白跑一趟。依這件家具的狀況，系統建議：</p>
-  <div class="card"><b>🔧 先修再用</b><div class="small">台中店提供部分家具修理服務；修好會記進履歷，之後賣得更好。</div></div>
-  <div class="card"><b>♻️ 在地再使用</b><div class="small">例如臺中市寶之林廢棄家具再生中心（示範，尚未接洽）。</div></div>
-  <div class="card"><b>🤝 寄售或轉賣</b><div class="small">附上這份履歷連結，買家看得到年限與維修紀錄。</div></div>
+  <div class="opt"><div class="ic">🔧</div><div><b>先修再用</b><div class="small">台中店提供部分家具修理服務；修好會記進履歷，之後更好賣。</div></div></div>
+  <div class="opt"><div class="ic">♻️</div><div><b>在地再使用</b><div class="small">例如臺中市寶之林廢棄家具再生中心（示範，尚未接洽）。</div></div></div>
+  <div class="opt"><div class="ic">🤝</div><div><b>寄售或轉賣</b><div class="small">附上簽章履歷連結，買家看得到年限與維修紀錄。</div></div></div>
   <button class="btn g" onclick="go('s-verify')">產生給下一位主人的履歷連結</button>
+ </div>
 </section>
 
-<!-- 6 店員端 -->
 <section class="scr" id="s-staff" data-t="店員確認" data-r="IKEA 店員">
-  <div class="alert g">今日預約 6 件：AI 已分流 <b>建議收購 3</b>｜<b>需人看 2</b>｜<b>建議不收 1</b>（示範）</div>
-  <div class="item"><div class="img">📚</div><div><b>兒童書櫃</b><div class="small" id="staffAI">AI：很好（輕微刮痕）｜NT$1,006</div></div></div>
+ <div class="stg">
+  <div class="kpis"><div><b class="ok" data-count="3">3</b><span>建議收購</span></div><div><b class="warn" data-count="2">2</b><span>需要人看</span></div><div><b class="bad" data-count="1">1</b><span>建議不收</span></div></div>
+  <div class="fl hot" style="cursor:default"><div class="ic" data-svg="shelf"></div><div><b>兒童書櫃｜14:00 預約</b><span class="small" id="staffAI">AI：很好（輕微刮痕）｜NT$1,006</span></div></div>
   <div class="card"><b>實品檢查後的分級</b>
     <div class="tier" id="staffTier"><div data-i="0"><b>45%</b>全新</div><div data-i="1" class="on"><b>35%</b>很好</div><div data-i="2"><b>25%</b>常用</div></div>
-    <div class="tier" style="grid-template-columns:1fr"><div data-i="3" id="staffNo"><b>不收</b>結構或缺件問題 → 轉先修或再使用</div></div>
+    <div class="tier" style="grid-template-columns:1fr;margin-top:0"><div data-i="3" id="staffNo"><b>不收</b>結構或缺件問題 → 轉先修或再使用</div></div>
     <div class="small" id="staffNote">與 AI 判斷一致</div></div>
-  <button class="btn d" onclick="staffSign()">確認並簽署（店員 #TC-012）</button>
+  <button class="btn d" onclick="staffSign()">確認並簽章（店員 #TC-012）</button>
+ </div>
 </section>
 
-<!-- 7 驗證頁 -->
 <section class="scr" id="s-verify" data-t="履歷驗證" data-r="下一位主人">
-  <p class="small">這是給二手買家看的頁面：看得到家具的紀錄，<b>看不到前主人的姓名、地址</b>。每筆紀錄都由簽署者用自己的金鑰簽章（ECDSA），並與前一筆的雜湊串接：改內容會對不上雜湊；重算雜湊，又沒有簽署者的私鑰可以重簽。</p>
-  <div id="vEvents"></div>
+ <div class="stg">
+  <p class="small">給二手買家看的頁面：看得到家具紀錄，<b>看不到前主人的姓名、地址</b>。每筆紀錄由簽署者用自己的金鑰簽章（ECDSA），並與前一筆的雜湊串接：改內容，雜湊對不上；重算雜湊，又沒有簽署者的私鑰可以重簽。</p>
+  <div class="tl" id="vEvents"></div>
   <div id="vResult"></div>
   <button class="btn r" onclick="tamper()">示範一：前主人偷改年份（2023 → 2025）</button>
   <button class="btn r" onclick="tamper2()">示範二：改年份＋重算全部雜湊</button>
   <button class="btn g" onclick="resetChain()">還原</button>
+ </div>
 </section>
 
-</main>
-<nav>
-  <button data-s="s-find" class="on"><span>📚</span>我的家具</button>
-  <button data-s="s-photo"><span>📸</span>評估</button>
-  <button data-s="s-staff"><span>🏬</span>店員端</button>
-  <button data-s="s-verify"><span>🔍</span>驗證</button>
-</nav>
+    </div>
+    <nav id="nav"><i class="ind" id="ind"></i>
+      <button data-s="s-find" class="on"><span>🪑</span>我的家具</button>
+      <button data-s="s-photo"><span>📸</span>評估</button>
+      <button data-s="s-staff"><span>🏬</span>店員端</button>
+      <button data-s="s-verify"><span>🔍</span>驗證</button>
+    </nav>
+    <div class="toast" id="toast"></div>
+  </div></div>
 </div>
+
 <script>
-const ORIG=2500;const RATES=[.45,.35,.25];const NAMES=['全新','很好','常用'];const DESC=['無刮痕','輕微刮痕','多處刮痕'];
-let tier=1, hist=['s-find'];
-const base=[
- {who:'IKEA 台中店',role:'IKEA',date:'2023/03/12',text:'購買紀錄：兒童書櫃 1 件',owner:'陳＊＊'},
- {who:'IKEA 台中店 修理服務',role:'IKEA',date:'2025/06/02',text:'更換層板支架 2 個（附照片）'},
- {who:'本人',role:'本人',date:'2026/11/18',text:'上傳 4 張狀況照片'}
+const SVG={
+ shelf:`<svg viewBox="0 0 60 70"><rect x="6" y="3" width="48" height="64" rx="3" fill="#b9854f"/><rect x="10" y="7" width="40" height="56" rx="2" fill="#e9d3b4"/><rect x="10" y="25" width="40" height="3" fill="#b9854f"/><rect x="10" y="44" width="40" height="3" fill="#b9854f"/><rect x="13" y="11" width="5" height="14" rx="1" fill="#2f9a6b"/><rect x="19" y="13" width="4" height="12" rx="1" fill="#efb02e"/><rect x="24" y="10" width="5" height="15" rx="1" fill="#1f5f99"/><rect x="36" y="16" width="10" height="9" rx="2" fill="#d36b4f"/><rect x="13" y="32" width="12" height="12" rx="2" fill="#8fc7a8"/><rect x="30" y="30" width="4" height="14" rx="1" fill="#b2412d"/><rect x="35" y="31" width="4" height="13" rx="1" fill="#efb02e"/><rect x="40" y="29" width="5" height="15" rx="1" fill="#2f9a6b"/><rect x="14" y="51" width="14" height="12" rx="2" fill="#c99a6b"/><rect x="32" y="51" width="14" height="12" rx="2" fill="#c99a6b"/><rect x="6" y="64" width="6" height="4" fill="#8a5f36"/><rect x="48" y="64" width="6" height="4" fill="#8a5f36"/></svg>`,
+ shelfside:`<svg viewBox="0 0 60 70"><polygon points="14,6 40,3 40,67 14,64" fill="#b9854f"/><polygon points="40,3 50,8 50,66 40,67" fill="#8a5f36"/><line x1="14" y1="26" x2="40" y2="25" stroke="#8a5f36" stroke-width="2"/><line x1="14" y1="45" x2="40" y2="45" stroke="#8a5f36" stroke-width="2"/></svg>`,
+ shelfback:`<svg viewBox="0 0 60 70"><rect x="6" y="3" width="48" height="64" rx="3" fill="#a87545"/><g stroke="#8a5f36" stroke-width="1.5"><line x1="10" y1="12" x2="50" y2="12"/><line x1="10" y1="35" x2="50" y2="35"/><line x1="10" y1="58" x2="50" y2="58"/></g><circle cx="12" cy="8" r="1.5" fill="#5c3d22"/><circle cx="48" cy="8" r="1.5" fill="#5c3d22"/></svg>`,
+ bolt:`<svg viewBox="0 0 60 70"><circle cx="30" cy="35" r="20" fill="#e9d3b4"/><rect x="18" y="31" width="24" height="8" rx="2" fill="#9aa5a0"/><circle cx="22" cy="35" r="3" fill="#5f6b65"/><circle cx="38" cy="35" r="3" fill="#5f6b65"/></svg>`,
+ chair:`<svg viewBox="0 0 60 70"><rect x="16" y="6" width="28" height="26" rx="6" fill="#2f9a6b"/><rect x="12" y="32" width="36" height="8" rx="3" fill="#1d6e4e"/><g stroke="#9aa5a0" stroke-width="4" stroke-linecap="round"><line x1="17" y1="40" x2="14" y2="64"/><line x1="43" y1="40" x2="46" y2="64"/></g></svg>`,
+ rack:`<svg viewBox="0 0 60 70"><g stroke="#7d8a83" stroke-width="3"><line x1="12" y1="4" x2="12" y2="66"/><line x1="48" y1="4" x2="48" y2="66"/></g><g fill="#c99a6b"><rect x="10" y="14" width="40" height="4" rx="1"/><rect x="10" y="34" width="40" height="4" rx="1"/><rect x="10" y="54" width="40" height="4" rx="1"/></g><rect x="16" y="22" width="12" height="12" rx="2" fill="#efb02e"/><rect x="31" y="44" width="13" height="10" rx="2" fill="#8fc7a8"/></svg>`
+};
+document.querySelectorAll('[data-svg]').forEach(e=>e.insertAdjacentHTML('afterbegin',SVG[e.dataset.svg]));
+
+const FLOW=[
+ ['s-find','從購買紀錄找家具','使用者旅程','舊家具沒有 QR 也能開始：會員從購買紀錄選一件，就建立履歷。購買紀錄由門市簽章，是整份履歷最可信的起點。'],
+ ['s-home','家具履歷','數位工具','每筆紀錄都標出是誰簽的：門市、修理服務、本人。進到頁面時會逐筆驗證簽章，被改動過的履歷會直接顯示警示。'],
+ ['s-photo','拍照＋3 題自評','使用者旅程','照片看得出刮痕；看不出的搖晃、缺件由使用者自評，到店再確認。'],
+ ['s-ai','AI 評分表','數位工具','AI 只依評分表逐項分級，不決定價格。任一項「明顯」或判斷不一致，一律轉「需要人看」。'],
+ ['s-price','新台幣金額＋理由','商業模式','分級對應 IKEA 英國、愛爾蘭回購的 45／35／25%，會員再乘 1.15；每個金額都附上依據。點分級卡可比較。'],
+ ['s-book','送件方式','使用者旅程','只送會被收的：命題的「逆物流」痛點，先縮小到「不白跑」。'],
+ ['s-staff','店員確認並簽章','商業模式','AI 先分好三群，店員只細看中間那群；最終價格由店員決定並簽章，修正紀錄用來校正評分表。'],
+ ['s-verify','竄改偵測','數位工具','試試兩種竄改：直接改年份，或改完重算全部雜湊。沒有簽署者的私鑰，簽章就驗證失敗。']
 ];
-let chain=[];const KEYS={};const enc=new TextEncoder();
-// 每位簽署者各自持有一把 ECDSA P-256 金鑰（原型在瀏覽器內產生，示範用）
+const ORDER=FLOW.map(f=>f[0]).concat(['s-no']);
+const stepsEl=document.getElementById('steps');
+stepsEl.innerHTML=FLOW.map((f,i)=>`<li><button data-s="${f[0]}" onclick="jump('${f[0]}')"><span class="n"></span>${i+1}. ${f[1]}</button></li>`).join('');
+function syncGuide(id){const idx=FLOW.findIndex(f=>f[0]===id);stepsEl.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('on',i===idx);b.classList.toggle('done',idx>-1&&i<idx)});
+ const f=FLOW[idx]||['s-no','其他去處','永續影響','不收的家具也有出口：先修再用、在地再使用、附履歷寄售。'];const n=document.getElementById('note');n.innerHTML=`<span class="tag">評分項目：${f[2]}</span><p>${f[3]}</p>`;n.classList.remove('swap');void n.offsetWidth;n.classList.add('swap')}
+function jump(id){if(id==='s-ai'||id==='s-price'){if(!aiDone){prepPhotos();evaluate();if(id==='s-ai')return}}go(id,true,ORDER.indexOf(id)>=ORDER.indexOf(cur)?'f':'b')}
+function step(d){const i=FLOW.findIndex(f=>f[0]===cur);const j=Math.max(0,Math.min(FLOW.length-1,(i<0?5:i)+d));jump(FLOW[j][0])}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+
+let cur='s-find',hist=['s-find'];
+const NAVS=['s-find','s-photo','s-staff','s-verify'];
+function go(id,push=true,dir){if(id===cur)return;const a=document.getElementById(cur),b=document.getElementById(id);
+ dir=dir||(push?'f':'b');a.classList.remove('on','in-f','in-b');a.classList.add(dir==='f'?'out-f':'out-b');setTimeout(()=>a.classList.remove('out-f','out-b'),430);
+ b.classList.remove('in-f','in-b');void b.offsetWidth;b.classList.add('on',dir==='f'?'in-f':'in-b');b.scrollTop=0;
+ cur=id;if(push&&hist[hist.length-1]!==id)hist.push(id);
+ document.getElementById('title').innerHTML=`<span>${b.dataset.t}</span>`;const r=document.getElementById('role');r.textContent=b.dataset.r;r.className='role'+(b.dataset.r==='IKEA 店員'?' staff':b.dataset.r==='下一位主人'?' buyer':'');
+ document.getElementById('back').classList.toggle('hide',hist.length<2);
+ const map={'s-find':0,'s-home':0,'s-photo':1,'s-ai':1,'s-price':1,'s-book':1,'s-no':1,'s-staff':2,'s-verify':3};const k=map[id];
+ document.querySelectorAll('nav button').forEach((x,i)=>x.classList.toggle('on',i===k));document.getElementById('ind').style.transform=`translateX(${k*100}%)`;
+ syncGuide(id);onEnter(id)}
+function back(){if(hist.length>1){hist.pop();go(hist[hist.length-1],false,'b')}}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>jump(b.dataset.s));
+function onEnter(id){if(id==='s-price')animPrice();if(id==='s-verify')render(true);if(id==='s-home')render(false);if(id==='s-staff')countUp();if(id==='s-photo')setTimeout(knobs,30)}
+
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn');if(!b||b.disabled)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height);const i=document.createElement('i');i.className='rip';i.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;b.appendChild(i);setTimeout(()=>i.remove(),600)});
+let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2300)}
+function selOpt(el){el.parentNode.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel')}
+document.querySelectorAll('#slots span').forEach(s=>s.onclick=e=>{e.stopPropagation();document.querySelectorAll('#slots span').forEach(x=>x.classList.remove('on'));s.classList.add('on')});
+function book(){const s=document.querySelector('#slots .on').textContent;toast(`已預約 ${s} 台中店收貨點（示範）`);setTimeout(()=>go('s-staff'),900)}
+function countUp(){if(document.body.classList.contains('noanim'))return;document.querySelectorAll('[data-count]').forEach(el=>{const n=+el.dataset.count;let i=0;el.textContent=0;const t=setInterval(()=>{el.textContent=++i;if(i>=n)clearInterval(t)},180)})}
+
+const ans={wobble:0,parts:0,carry:0};
+function placeKnob(seg){const on=seg.querySelector('button.on'),k=seg.querySelector('.knob');if(!on.offsetWidth)return;k.style.width=on.offsetWidth+'px';k.style.transform=`translateX(${on.offsetLeft-3}px)`}
+document.querySelectorAll('.seg').forEach(seg=>{seg.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');ans[seg.dataset.k]=i;placeKnob(seg)})});
+function knobs(){document.querySelectorAll('.seg').forEach(placeKnob)}
+
+const angles=[['正面','shelf'],['側面','shelfside'],['背板','shelfback'],['五金','bolt']];let shot=[0,0,0,0];
+function drawShots(){document.getElementById('shots').innerHTML=angles.map((a,i)=>shot[i]?`<div class="shot ok" style="cursor:default">${SVG[a[1]]}<span class="lab">✓ ${a[0]}</span>${shot[i]===2?'<i class="flash"></i>':''}</div>`:`<div class="shot" onclick="snap(${i})"><span class="cam">📷</span>${a[0]}</div>`).join('');
+ const n=shot.filter(Boolean).length;document.getElementById('shotProg').style.width=n*25+'%';const b=document.getElementById('evalBtn');b.disabled=n<4;b.textContent=n<4?`再拍 ${4-n} 張就能送出`:'送出評估'}
+function snap(i){shot[i]=2;drawShots();shot[i]=1}
+function prepPhotos(){shot=[1,1,1,1];drawShots()}
+
+const ORIG=2500,RATES=[.45,.35,.25],NAMES=['全新','很好','常用'],DESC=['無刮痕','輕微刮痕','多處刮痕'];let tier=1,aiTier=1,aiDone=false;
+function evaluate(){const rows=[['照片合格（角度、光線）','合格','ok'],['同類家具比對','是書櫃','ok'],['表面刮痕','輕微','warn'],['搖晃（使用者自評）',ans.wobble?'有點':'不會',ans.wobble?'warn':'ok'],['零件（自評＋零件清單）',ans.parts?'缺件':'完整',ans.parts?'bad':'ok'],['履歷完整度','3／3 筆有簽章','ok']];
+ let route='建議收購',cls='g';aiTier=1;if(ans.wobble){aiTier=2;route='需要人看';cls='y'}if(ans.parts){route='建議不收（可先修）';cls='r'}window._reject=!!ans.parts;
+ document.getElementById('aiRows').innerHTML='<b>評分表</b>'+rows.map(r=>`<div class="row wait ${r[2]}"><span>${r[0]}</span><span class="v ${r[2]}">${r[1]}</span></div>`).join('');
+ document.getElementById('aiTier').textContent=NAMES[aiTier]+'（'+DESC[aiTier]+'）';const rb=document.getElementById('aiRoute');rb.textContent=route;rb.className='badge '+cls;
+ const res=document.getElementById('aiRes'),nx=document.getElementById('aiNext');res.classList.remove('show');nx.style.opacity=0;
+ setTier(aiTier);setAI();aiDone=true;if(ans.carry)setTimeout(()=>toast('不方便自己載：可選「買新收舊」（規劃中）'),2600);
+ go('s-ai',true,'f');const beam=document.getElementById('beam');beam.style.animation='none';void beam.offsetWidth;beam.style.animation='';
+ const rs=[...document.querySelectorAll('#aiRows .row')];
+ rs.forEach((r,i)=>{setTimeout(()=>r.classList.remove('wait'),500+i*220);setTimeout(()=>r.classList.add('done'),850+i*220)});
+ setTimeout(()=>{res.classList.add('show');rb.classList.remove('popin');void rb.offsetWidth;rb.classList.add('popin');nx.style.transition='opacity .4s';nx.style.opacity=1},900+rs.length*220)}
+function price(t){return Math.round(ORIG*RATES[t]*1.15)}
+function setTier(t){tier=t;document.getElementById('staffNo').classList.remove('on');document.querySelectorAll('#tiers div,#staffTier div').forEach(d=>d.classList.toggle('on',+d.dataset.i===t));document.getElementById('whyTier').textContent=NAMES[t]+'（照片＋自評）';document.getElementById('pWhy').textContent=`原價 NT$2,500 × ${NAMES[t]} ${RATES[t]*100}% × 會員 1.15`;if(cur==='s-price')animPrice()}
+function setAI(){document.getElementById('staffAI').textContent=`AI：${NAMES[aiTier]}（${DESC[aiTier]}）｜NT$${price(aiTier).toLocaleString()}`}
+let shown=0;
+function animPrice(){const target=price(tier),from=shown,t0=performance.now(),el=document.getElementById('pBig');document.getElementById('gPct').textContent=RATES[tier]*100+'%';
+ document.getElementById('gFg').style.strokeDashoffset=226.2*(1-RATES[tier]/.45*.85);
+ if(document.body.classList.contains('noanim')){el.textContent='NT$ '+target.toLocaleString();shown=target;return}
+ (function f(t){const k=Math.min(1,(t-t0)/700),e=1-Math.pow(1-k,3),v=Math.round(from+(target-from)*e);el.textContent='NT$ '+v.toLocaleString();if(k<1)requestAnimationFrame(f);else shown=target})(t0)}
+document.querySelectorAll('#tiers div').forEach(d=>d.onclick=()=>setTier(+d.dataset.i));
+document.querySelectorAll('#staffTier div').forEach(d=>d.onclick=()=>{setTier(+d.dataset.i);document.getElementById('staffNote').textContent=+d.dataset.i===aiTier?'與 AI 判斷一致':'店員修正了 AI 的判斷（會記錄下來，用來校正評分表）'});
+document.getElementById('staffNo').onclick=()=>{tier=3;document.querySelectorAll('#staffTier div').forEach(x=>x.classList.remove('on'));document.getElementById('staffNo').classList.add('on');document.getElementById('staffNote').textContent='不收：消費者可選擇載回，或由合作單位定期到店收取（規劃中）'};
+
+/* 簽章履歷：每位簽署者一把 ECDSA P-256 金鑰（示範在瀏覽器產生），紀錄以 SHA-256 串接，實際計算 */
+const base=[
+ {who:'IKEA 台中店',date:'2023/03/12',text:'購買紀錄：兒童書櫃 1 件',owner:'陳＊＊'},
+ {who:'IKEA 台中店 修理服務',date:'2025/06/02',text:'更換層板支架 2 個（附照片）'},
+ {who:'本人',date:'2026/11/18',text:'上傳 4 張狀況照片'}];
+let chain=[];const KEYS={};const enc=new TextEncoder();const G='0'.repeat(64);
 async function key(who){if(!KEYS[who])KEYS[who]=await crypto.subtle.generateKey({name:'ECDSA',namedCurve:'P-256'},false,['sign','verify']);return KEYS[who]}
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',enc.encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-const G='0'.repeat(64);const body=(prev,e)=>prev+'|'+e.who+'|'+e.date+'|'+e.text;
+const body=(prev,e)=>prev+'|'+e.who+'|'+e.date+'|'+e.text;
 async function signed(e,prev){const hash=await sha(body(prev,e));const sig=new Uint8Array(await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'},(await key(e.who)).privateKey,enc.encode(hash)));return {...e,prev,hash,sig}}
 async function build(list){let prev=G;const out=[];for(const e of list){const r=await signed(e,prev);out.push(r);prev=r.hash}return out}
 async function verify(c){let prev=G;const bad={};for(let i=0;i<c.length;i++){const e=c[i];const h=await sha(body(prev,e));
  if(e.prev!==prev)bad[i]='和前一筆接不上';else if(h!==e.hash)bad[i]='內容和雜湊不符';
- else if(!(await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},(await key(e.who)).publicKey,e.sig,enc.encode(e.hash))))bad[i]=e.who+' 的簽章驗證失敗';
- prev=e.hash}return bad}
-function hex(u){return [...u.slice(0,6)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-function evHTML(c,bad={},pub=false){return c.map((e,i)=>`<div class="ev ${bad[i]?'bad':''}"><span class="who ${e.role==='本人'?'self':''}">${bad[i]?'✗':'✓'} ${e.who}</span>　${e.date}<br>${e.text}${e.owner&&!pub?`<span class="small">（購買人：${e.owner}）</span>`:''}${e.owner&&pub?`<span class="small">（購買人：已隱藏）</span>`:''}<div class="h">#${e.hash.slice(0,16)}　← 前一筆 #${e.prev.slice(0,16)}<br>簽章 ${hex(e.sig)}…${bad[i]?'<br><b style="color:#ad3f2c">'+bad[i]+'</b>':''}</div></div>`).join('')}
-async function render(){document.getElementById('events').innerHTML=evHTML(chain);const bad=await verify(chain);const n=Object.keys(bad).length;document.getElementById('vEvents').innerHTML=evHTML(chain,bad,true);
- document.getElementById('vResult').innerHTML=n?`<div class="alert r"><b>⚠ 紀錄被改動過</b><br>第 ${Object.keys(bad).map(i=>+i+1).join('、')} 筆驗證失敗，這份履歷不能當估價依據。</div>`:`<div class="alert g"><b>✓ 驗證通過</b><br>${chain.length} 筆紀錄的雜湊串接與簽章都正確。</div>`;
- const cb=document.getElementById('chainBadge');cb.className='badge '+(n?'r':'g');cb.textContent=n?'✗ 紀錄被改動過':'✓ 紀錄完整、未被改動'}
-// 竄改一：直接改年份
-async function tamper(){chain[0]={...chain[0],date:'2025/03/12'};await render()}
-// 竄改二：改年份後把所有雜湊重算；拿不到 IKEA 的私鑰，只能沿用舊簽章
-async function tamper2(){const old=chain.slice();let prev=G;chain=[];for(let i=0;i<old.length;i++){const e=i===0?{...old[i],date:'2025/03/12'}:old[i];const hash=await sha(body(prev,e));chain.push({...e,prev,hash,sig:old[i].sig});prev=hash}await render()}
-async function resetChain(){chain=await build(base);await render()}
-async function staffSign(){const e={who:'IKEA 台中店 店員 #TC-012',role:'IKEA',date:'2026/11/23',text:tier===3?'到店驗收：不收，轉先修或再使用':`到店驗收：${NAMES[tier]}，回購 NT$${price(tier).toLocaleString()}`};chain.push(await signed(e,chain[chain.length-1].hash));await render();toast('已簽署，紀錄已加入履歷');go('s-verify')}
-function price(t){return Math.round(ORIG*RATES[t]*1.15)}
-function setTier(t){tier=t;document.getElementById('staffNo').classList.remove('on');document.querySelectorAll('#tiers div,#staffTier div').forEach(d=>d.classList.toggle('on',+d.dataset.i===t));document.getElementById('pBig').textContent='NT$ '+price(t).toLocaleString();document.getElementById('pWhy').textContent=`原價 NT$2,500 × ${NAMES[t]} ${RATES[t]*100}%｜IKEA Family 會員再加 15%`;document.getElementById('whyTier').textContent=NAMES[t]+'（照片＋自評）'}
-function setAI(){document.getElementById('staffAI').textContent=`AI：${NAMES[aiTier]}（${DESC[aiTier]}）｜NT$${price(aiTier).toLocaleString()}`}
-document.getElementById('staffNo').onclick=()=>{tier=3;document.querySelectorAll('#staffTier div').forEach(x=>x.classList.remove('on'));document.getElementById('staffNo').classList.add('on');document.getElementById('staffNote').textContent='不收：消費者可選擇載回，或由合作單位定期到店收取（規劃中）'};
-document.querySelectorAll('#staffTier div').forEach(d=>d.onclick=()=>{const ai=tier;setTier(+d.dataset.i);document.getElementById('staffNote').textContent=+d.dataset.i===aiTier?'與 AI 判斷一致':'店員修正了 AI 的判斷（會記錄下來，用來校正評分表）'});
-let aiTier=1;
-// photos
-const angles=['正面','側面','背板','五金'];let shot=[0,0,0,0];
-function drawShots(){document.getElementById('shots').innerHTML=angles.map((a,i)=>`<div class="shot ${shot[i]?'ok':''}" onclick="snap(${i})">${shot[i]?'✓ '+a:'📷<br>'+a}</div>`).join('');const all=shot.every(x=>x);const b=document.getElementById('evalBtn');b.disabled=!all;b.style.opacity=all?1:.5;b.textContent=all?'送出評估':'送出評估（拍完 4 張才可送出）'}
-function snap(i){shot[i]=1;drawShots()}
-const ans={wobble:0,parts:0,carry:0};
-document.querySelectorAll('.seg').forEach(s=>s.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{s.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');ans[s.dataset.k]=i}));
-function evaluate(){const rows=[['照片合格（角度、光線）','合格','ok'],['同類家具比對','是書桌','ok'],['表面刮痕','輕微','warn'],['搖晃（使用者自評）',ans.wobble?'有點':'不會',ans.wobble?'warn':'ok'],['零件（使用者自評＋零件清單）',ans.parts?'缺件':'完整',ans.parts?'bad':'ok'],['履歷完整度','3／3 筆有簽署','ok']];
- document.getElementById('aiRows').innerHTML='<b>評分表</b>'+rows.map(r=>`<div class="row"><span>${r[0]}</span><span class="tag ${r[2]}">${r[1]}</span></div>`).join('');
- let route='建議收購',cls='g';aiTier=1;if(ans.wobble){aiTier=2;route='需要人看';cls='y'}if(ans.parts){route='建議不收（可先修）';cls='r'}window._reject=!!ans.parts;
- document.getElementById('aiTier').textContent=NAMES[aiTier]+'（'+DESC[aiTier]+'）';const r=document.getElementById('aiRoute');r.textContent=route;r.className='badge '+cls;setTier(aiTier);setAI();
- if(ans.carry)toast('不方便自己載：可選「買新收舊」（規劃中）');go('s-ai')}
-function toast(m){const t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;left:50%;top:70px;transform:translateX(-50%);background:#1f2a25;color:#fff;padding:10px 14px;border-radius:10px;font-size:14px;z-index:9;max-width:90%';document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
-function go(id,push=true){document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id===id));const s=document.getElementById(id);document.getElementById('title').textContent=s.dataset.t;document.getElementById('role').textContent=s.dataset.r;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===id));if(push&&hist[hist.length-1]!==id)hist.push(id);window.scrollTo(0,0)}
-function back(){if(hist.length>1){hist.pop();go(hist[hist.length-1],false)}}
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.s));
-(async()=>{chain=await build(base);drawShots();await render();const q=new URLSearchParams(location.search).get('s');if(q){if(q==='s-ai'||q==='s-price'){shot=[1,1,1,1];drawShots();evaluate()}go(q)}const tt=new URLSearchParams(location.search).get('t');if(tt==='1')await tamper();if(tt==='2')await tamper2()})();
+ else if(!(await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},(await key(e.who)).publicKey,e.sig,enc.encode(e.hash))))bad[i]=e.who+' 的簽章驗證失敗';prev=e.hash}return bad}
+const hex=u=>[...u.slice(0,6)].map(x=>x.toString(16).padStart(2,'0')).join('');
+function evHTML(c,pub){return c.map((e,i)=>`<div class="ev"><span class="who">${e.who}</span>　<span class="small">${e.date}</span><br>${e.text}${e.owner?`<span class="small">（購買人：${pub?'已隱藏':e.owner}）</span>`:''}<div class="h">#${e.hash.slice(0,16)} ← #${e.prev.slice(0,16)}<br>簽章 ${hex(e.sig)}…</div><div class="why"></div></div>`).join('')}
+let busy=0;
+async function render(isVerify){const box=document.getElementById(isVerify?'vEvents':'events');box.innerHTML=evHTML(chain,isVerify);if(isVerify)document.getElementById('vResult').innerHTML='';
+ const bad=await verify(chain);const n=Object.keys(bad).length;const my=++busy;const evs=[...box.querySelectorAll('.ev')];const fast=document.body.classList.contains('noanim');
+ for(let i=0;i<evs.length;i++){if(my!==busy)return;const ev=evs[i];if(!fast){ev.classList.add('chk');await new Promise(r=>setTimeout(r,isVerify?320:140))}ev.classList.remove('chk');
+  if(bad[i]){ev.classList.add('bad','sh');ev.querySelector('.who').textContent='✗ '+chain[i].who;ev.querySelector('.why').textContent=bad[i]}else{ev.classList.add('ok');ev.querySelector('.who').textContent='✓ '+chain[i].who}}
+ const cb=document.getElementById('chainBadge');cb.className='badge popin '+(n?'r':'g');cb.textContent=n?'✗ 紀錄被改動過':'✓ 紀錄完整、未被改動';
+ if(isVerify)document.getElementById('vResult').innerHTML=n?`<div class="alert r popin"><b>⚠ 紀錄被改動過</b><br>第 ${Object.keys(bad).map(i=>+i+1).join('、')} 筆驗證失敗，這份履歷不能當估價依據。</div>`:`<div class="alert g popin"><b>✓ 驗證通過</b><br>${chain.length} 筆紀錄的雜湊串接與簽章都正確。</div>`}
+async function tamper(){chain[0]={...chain[0],date:'2025/03/12'};await render(true)}
+async function tamper2(){const old=chain.slice();let prev=G;chain=[];for(let i=0;i<old.length;i++){const e=i===0?{...old[i],date:'2025/03/12'}:old[i];const hash=await sha(body(prev,e));chain.push({...e,prev,hash,sig:old[i].sig});prev=hash}await render(true)}
+async function resetChain(){chain=await build(base);await render(true)}
+async function staffSign(){const e={who:'IKEA 台中店 店員 #TC-012',date:'2026/11/23',text:tier===3?'到店驗收：不收，轉先修或再使用':`到店驗收：${NAMES[tier]}，回購 NT$${price(tier).toLocaleString()}`};chain.push(await signed(e,chain[chain.length-1].hash));
+ const st=document.createElement('div');st.className='stamp';st.innerHTML='<div>已簽章</div>';document.getElementById('app').appendChild(st);setTimeout(()=>{st.remove();go('s-verify')},1100)}
+
+let playing=false;const wait=ms=>new Promise(r=>setTimeout(r,ms));
+async function autoplay(){if(playing){playing=false;return}playing=true;const pb=document.getElementById('playBtn');pb.textContent='■ 停止示範';
+ chain=await build(base);shot=[0,0,0,0];drawShots();aiDone=false;hist=['s-find'];if(cur!=='s-find')go('s-find',false,'b');
+ const S=[async()=>{await wait(1800);go('s-home')},async()=>{await wait(2800);go('s-photo')},
+  async()=>{for(let i=0;i<4;i++){await wait(600);snap(i)}await wait(900)},async()=>{evaluate();await wait(3900)},
+  async()=>{go('s-price');await wait(1600);setTier(0);await wait(1200);setTier(1);await wait(1700)},
+  async()=>{go('s-book');await wait(2400);book();await wait(2800)},async()=>{staffSign();await wait(3800)},
+  async()=>{await wait(600);await tamper2();await wait(3000);await resetChain()}];
+ for(const s of S){if(!playing)break;await s()}playing=false;pb.textContent='▶ 自動示範'}
+
+(async()=>{chain=await build(base);drawShots();setAI();syncGuide('s-find');knobs();window.addEventListener('resize',knobs);
+ const qs=new URLSearchParams(location.search),q=qs.get('s'),t=qs.get('t');
+ if(q){document.body.classList.add('noanim');if(['s-ai','s-price'].includes(q)){prepPhotos();evaluate()}if(q==='s-photo'){shot=[1,1,0,0];drawShots()}go(q);
+  if(q==='s-ai'){document.querySelectorAll('#aiRows .row').forEach(r=>{r.classList.remove('wait');r.classList.add('done')});document.getElementById('aiRes').classList.add('show');document.getElementById('aiNext').style.opacity=1}
+  if(t==='1')await tamper();if(t==='2')await tamper2()}})();
 </script>
 </body>
 </html>

@@ -100,9 +100,9 @@ input[type=range]{width:100%}
 
 <!-- 4 價格 -->
 <section class="scr" id="s-price" data-t="預估結果" data-r="消費者">
-  <div class="price"><div class="small">預估回購金（IKEA 抵用金）</div><div class="big" id="pBig">NT$ 1,005</div><div class="small" id="pWhy">原價 NT$2,500 × 很好 35%｜會員再加 15%</div></div>
+  <div class="price"><div class="small">預估回購金（IKEA 抵用金）</div><div class="big" id="pBig">NT$ 1,006</div><div class="small" id="pWhy">原價 NT$2,500 × 很好 35%｜會員再加 15%</div></div>
   <div class="tier" id="tiers"><div data-i="0"><b>45%</b>全新<br>無刮痕</div><div data-i="1" class="on"><b>35%</b>很好<br>輕微刮痕</div><div data-i="2"><b>25%</b>常用<br>多處刮痕</div></div>
-  <div class="small">分級比例參考 IKEA 英國／愛爾蘭公開的回購條件；台灣實際比例需與 IKEA 確認。</div>
+  <div class="small">分級比例參考 IKEA 英國、愛爾蘭公開的回購條件；台灣實際比例需與 IKEA 確認。</div>
   <div class="card" style="margin-top:10px"><b>為什麼是這個價格？</b>
     <div class="row"><span>年限</span><span>3 年（IKEA 訂單紀錄）</span></div>
     <div class="row"><span>維修</span><span>1 次（台中店修理服務簽署）</span></div>
@@ -142,7 +142,7 @@ input[type=range]{width:100%}
 <!-- 6 店員端 -->
 <section class="scr" id="s-staff" data-t="店員確認" data-r="IKEA 店員">
   <div class="alert g">今日預約 6 件：AI 已分流 <b>建議收購 3</b>｜<b>需人看 2</b>｜<b>建議不收 1</b>（示範）</div>
-  <div class="item"><div class="img">📚</div><div><b>兒童書櫃</b><div class="small" id="staffAI">AI：很好（輕微刮痕）｜NT$1,005</div></div></div>
+  <div class="item"><div class="img">📚</div><div><b>兒童書櫃</b><div class="small" id="staffAI">AI：很好（輕微刮痕）｜NT$1,006</div></div></div>
   <div class="card"><b>實品檢查後的分級</b>
     <div class="tier" id="staffTier"><div data-i="0"><b>45%</b>全新</div><div data-i="1" class="on"><b>35%</b>很好</div><div data-i="2"><b>25%</b>常用</div></div>
     <div class="tier" style="grid-template-columns:1fr"><div data-i="3" id="staffNo"><b>不收</b>結構或缺件問題 → 轉先修或再使用</div></div>
@@ -198,7 +198,7 @@ async function tamper(){chain[0]={...chain[0],date:'2025/03/12'};await render()}
 async function tamper2(){const old=chain.slice();let prev=G;chain=[];for(let i=0;i<old.length;i++){const e=i===0?{...old[i],date:'2025/03/12'}:old[i];const hash=await sha(body(prev,e));chain.push({...e,prev,hash,sig:old[i].sig});prev=hash}await render()}
 async function resetChain(){chain=await build(base);await render()}
 async function staffSign(){const e={who:'IKEA 台中店 店員 #TC-012',role:'IKEA',date:'2026/11/23',text:tier===3?'到店驗收：不收，轉先修或再使用':`到店驗收：${NAMES[tier]}，回購 NT$${price(tier).toLocaleString()}`};chain.push(await signed(e,chain[chain.length-1].hash));await render();toast('已簽署，紀錄已加入履歷');go('s-verify')}
-function price(t){return Math.round(ORIG*RATES[t]*1.15/5)*5}
+function price(t){return Math.round(ORIG*RATES[t]*1.15)}
 function setTier(t){tier=t;document.getElementById('staffNo').classList.remove('on');document.querySelectorAll('#tiers div,#staffTier div').forEach(d=>d.classList.toggle('on',+d.dataset.i===t));document.getElementById('pBig').textContent='NT$ '+price(t).toLocaleString();document.getElementById('pWhy').textContent=`原價 NT$2,500 × ${NAMES[t]} ${RATES[t]*100}%｜IKEA Family 會員再加 15%`;document.getElementById('whyTier').textContent=NAMES[t]+'（照片＋自評）'}
 function setAI(){document.getElementById('staffAI').textContent=`AI：${NAMES[aiTier]}（${DESC[aiTier]}）｜NT$${price(aiTier).toLocaleString()}`}
 document.getElementById('staffNo').onclick=()=>{tier=3;document.querySelectorAll('#staffTier div').forEach(x=>x.classList.remove('on'));document.getElementById('staffNo').classList.add('on');document.getElementById('staffNote').textContent='不收：消費者可選擇載回，或由合作單位定期到店收取（規劃中）'};

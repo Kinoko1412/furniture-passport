@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>家具履歷 原型</title>
+<style>
+:root{--ink:#1f2a25;--sub:#5d6a63;--line:#dde5df;--bg:#f3f6f2;--g:#1d6e4e;--g2:#2f9a6b;--gbg:#e4f2ea;--wood:#9c6a40;--woodbg:#f6ede3;--y:#e9a92b;--ybg:#fff4da;--r:#ad3f2c;--rbg:#fbebe7;--b:#1f5f99;--bbg:#e7eff8}
+*{box-sizing:border-box}
+html,body{margin:0;background:#dfe7e2;font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink)}
+.wrap{max-width:420px;margin:0 auto;min-height:100vh;background:#fff;position:relative;display:flex;flex-direction:column}
+header{background:var(--g);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
+header button{background:none;border:0;color:#fff;font-size:20px;cursor:pointer;padding:0 4px}
+header .t{font-weight:800;font-size:17px;flex:1}
+header .role{font-size:11px;background:rgba(255,255,255,.18);border-radius:10px;padding:2px 8px}
+main{padding:14px 16px 90px;flex:1}
+.scr{display:none}.scr.on{display:block}
+h2{font-size:18px;margin:4px 0 10px}
+p{line-height:1.55;margin:0 0 10px}
+.small{font-size:12.5px;color:var(--sub);line-height:1.5}
+.card{border:1px solid var(--line);border-radius:14px;padding:12px;margin:0 0 10px;background:#fff}
+.item{display:flex;gap:12px;align-items:center;background:var(--woodbg);border-radius:14px;padding:12px;margin-bottom:12px}
+.img{width:58px;height:58px;border-radius:12px;background:linear-gradient(135deg,#d3ab80,#8b5e3b);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:26px}
+.ev{border-left:4px solid var(--g2);padding:6px 0 6px 10px;margin:8px 0}
+.ev .who{font-weight:800;color:var(--g)}
+.ev .who.self{color:var(--wood)}
+.ev .h{font-family:ui-monospace,Consolas,monospace;font-size:10.5px;color:#8a978f;word-break:break-all}
+.ev.bad{border-color:var(--r);background:var(--rbg)}
+.ev.bad .who{color:var(--r)}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:13px;font-size:15.5px;font-weight:800;cursor:pointer;margin:8px 0;font-family:inherit}
+.btn.p{background:var(--y);color:#3d2a00}
+.btn.g{background:var(--gbg);color:var(--g)}
+.btn.d{background:var(--g);color:#fff}
+.btn.r{background:var(--rbg);color:var(--r)}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.shot{height:92px;border-radius:12px;border:2px dashed #c9b49b;background:#faf6f1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;color:var(--wood);cursor:pointer;text-align:center}
+.shot.ok{border:0;background:linear-gradient(135deg,#d8c0a5,#a77b52);color:#fff;text-shadow:0 0 3px #0008}
+.q{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.seg{display:flex;gap:4px}
+.seg button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-size:13px;cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--g);color:#fff;border-color:var(--g)}
+.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.tag{font-weight:800}.ok{color:var(--g)}.warn{color:#b07400}.bad{color:var(--r)}
+.price{background:var(--g);color:#fff;border-radius:14px;padding:14px;margin:10px 0}
+.price .big{font-size:28px;font-weight:900;margin:2px 0}
+.price .small{color:#d6eee1}
+.tier{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.tier div{border-radius:10px;padding:7px 4px;text-align:center;background:var(--bg);font-size:12px;border:2px solid transparent}
+.tier div b{display:block;font-size:16px}
+.tier div.on{border-color:var(--g);background:var(--gbg)}
+.badge{display:inline-block;border-radius:8px;padding:2px 8px;font-size:12px;font-weight:800}
+.badge.g{background:var(--gbg);color:var(--g)}.badge.y{background:var(--ybg);color:#8a6100}.badge.r{background:var(--rbg);color:var(--r)}
+.alert{border-radius:12px;padding:10px 12px;margin:10px 0;font-size:14px;line-height:1.5}
+.alert.g{background:var(--gbg);color:#14553b}.alert.r{background:var(--rbg);color:var(--r)}.alert.y{background:var(--ybg);color:#6b4d00}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#fff;border-top:1px solid var(--line);display:flex;z-index:6}
+nav button{flex:1;border:0;background:none;padding:9px 0 11px;font-size:11.5px;color:var(--sub);cursor:pointer;font-family:inherit}
+nav button span{display:block;font-size:19px}
+nav button.on{color:var(--g);font-weight:800}
+.mask{filter:blur(4px)}
+input[type=range]{width:100%}
+.note{font-size:11px;color:#8a978f;text-align:center;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><button id="back" onclick="back()">‹</button><div class="t" id="title">我的家具履歷</div><div class="role" id="role">消費者</div></header>
+<main>
+
+<!-- 1 履歷 -->
+<section class="scr" id="s-home" data-t="我的家具履歷" data-r="消費者">
+  <div class="item"><div class="img">📚</div><div><b style="font-size:16px">兒童書櫃（範例）</b><div class="small">品號 000.000.00｜2023/03 購入｜IKEA 台中店</div><span class="badge g" id="chainBadge">✓ 紀錄完整、未被改動</span></div></div>
+  <div id="events"></div>
+  <button class="btn p" onclick="go('s-photo')">我想換掉這件</button>
+  
+  <button class="btn g" onclick="toast('已預約台中店家具修理服務（示範）')">預約維修</button>
+  <p class="note">原型示範資料｜Proof to zero｜2026 永續智慧創新黑客松</p>
+</section>
+
+<!-- 2 拍照＋自評 -->
+<section class="scr" id="s-photo" data-t="拍照評估" data-r="消費者">
+  <p class="small">請依提示拍 4 個角度。只拍家具本身，避免拍到家人或門牌。</p>
+  <div class="shots" id="shots"></div>
+  <div class="card">
+    <b>3 個簡單問題</b><div class="small">照片看不出來的，請你自己檢查</div>
+    <div class="q"><span>輕推會不會搖晃？</span><div class="seg" data-k="wobble"><button class="on">不會</button><button>有點</button></div></div>
+    <div class="q"><span>零件、螺絲都還在？</span><div class="seg" data-k="parts"><button class="on">都在</button><button>缺</button></div></div>
+    <div class="q"><span>可以自己載到店嗎？</span><div class="seg" data-k="carry"><button class="on">可以</button><button>不行</button></div></div>
+  </div>
+  <button class="btn d" id="evalBtn" onclick="evaluate()" disabled style="opacity:.5">送出評估（拍完 4 張才可送出）</button>
+</section>
+
+<!-- 3 AI 評分 -->
+<section class="scr" id="s-ai" data-t="AI 評分表" data-r="消費者">
+  <div class="alert y">AI 只依評分表逐項判斷，<b>不決定價格</b>。價格由 IKEA 的回購規則計算，最後由店員看實品確認。</div>
+  <div class="card" id="aiRows"></div>
+  <div class="card"><div class="row"><span>狀況分級</span><span class="tag ok" id="aiTier">很好（輕微刮痕）</span></div>
+    <div class="small" style="margin-top:6px">分流結果：<span id="aiRoute" class="badge g">建議收購</span></div></div>
+  <button class="btn d" onclick="go(window._reject?'s-no':'s-price')">看下一步</button>
+</section>
+
+<!-- 4 價格 -->
+<section class="scr" id="s-price" data-t="預估結果" data-r="消費者">
+  <div class="price"><div class="small">預估回購金（IKEA 抵用金）</div><div class="big" id="pBig">NT$ 1,005</div><div class="small" id="pWhy">原價 NT$2,500 × 很好 35%｜會員再加 15%</div></div>
+  <div class="tier" id="tiers"><div data-i="0"><b>45%</b>全新<br>無刮痕</div><div data-i="1" class="on"><b>35%</b>很好<br>輕微刮痕</div><div data-i="2"><b>25%</b>常用<br>多處刮痕</div></div>
+  <div class="small">分級比例參考 IKEA 英國／愛爾蘭公開的回購條件；台灣實際比例需與 IKEA 確認。</div>
+  <div class="card" style="margin-top:10px"><b>為什麼是這個價格？</b>
+    <div class="row"><span>年限</span><span>3 年（IKEA 訂單紀錄）</span></div>
+    <div class="row"><span>維修</span><span>1 次（台中店修理服務簽署）</span></div>
+    <div class="row"><span>狀況</span><span id="whyTier">很好（照片＋自評）</span></div></div>
+  <button class="btn p" onclick="go('s-book')">選擇送件方式</button>
+  <button class="btn g" onclick="go('s-no')">不想賣／不收的話怎麼辦？</button>
+</section>
+
+<!-- 4b 送件方式 -->
+<section class="scr" id="s-book" data-t="送件方式" data-r="消費者">
+  <p class="small">預估「建議收購」才會請你送件，避免載到店才被拒收。</p>
+  <div class="card"><b>🚗 自己載到台中店收貨點</b><div class="small">試辦期主要方式。請以<b>組好</b>的狀態送件（IKEA 海外回購規定只收組好、功能完整的家具）。</div><button class="btn p" onclick="toast('已預約 11/23（一）14:00 台中店收貨點（示範）');go('s-staff')">預約時段</button></div>
+  <div class="card"><b>🛋️ 買新收舊</b><div class="small">訂購新家具時，配送人員順路把舊的載回（規劃中，需 IKEA 評估）。</div></div>
+  <div class="card"><b>🚚 到府收件</b><div class="small">大件家具（衣櫃、沙發）列入第二階段評估。</div></div>
+  <div class="alert y">到店後若店員判定不收，可以當場轉到捐贈或再使用管道，不用再載回家（規劃中）。</div>
+</section>
+
+<!-- 1b 沒有 QR：從購買紀錄找 -->
+<section class="scr on" id="s-find" data-t="從購買紀錄找家具" data-r="消費者">
+  <p class="small">家裡的舊家具沒有 QR？登入 IKEA Family 會員，從購買紀錄選一件，就能建立履歷（購買紀錄由 IKEA 簽署）。</p>
+  <div class="card" onclick="go('s-home')" style="cursor:pointer"><div class="row"><span>📚 兒童書櫃</span><span class="small">2023/03/12 台中店</span></div></div>
+  <div class="card"><div class="row"><span>🪑 兒童椅 ×2</span><span class="small">2023/03/12 台中店</span></div></div>
+  <div class="card"><div class="row"><span>🗄️ 收納層架</span><span class="small">2021/08/30 台中店</span></div></div>
+  <div class="card" style="background:var(--bg)"><b>找不到購買紀錄？</b><div class="small">可以輸入品名自行補登，履歷會標示「未經 IKEA 簽署」，估價區間會比較寬。</div></div>
+  <div class="small">QR 標籤在第一次到店驗收時由店員貼上，之後轉手時掃 QR 就能看到履歷。</div>
+</section>
+
+<!-- 5 不收的去處 -->
+<section class="scr" id="s-no" data-t="其他去處" data-r="消費者">
+  <p>不用白跑一趟。依這件家具的狀況，系統建議：</p>
+  <div class="card"><b>🔧 先修再用</b><div class="small">台中店提供部分家具修理服務；修好會記進履歷，之後賣得更好。</div></div>
+  <div class="card"><b>♻️ 在地再使用</b><div class="small">例如臺中市寶之林廢棄家具再生中心（示範，尚未接洽）。</div></div>
+  <div class="card"><b>🤝 寄售或轉賣</b><div class="small">附上這份履歷連結，買家看得到年限與維修紀錄。</div></div>
+  <button class="btn g" onclick="go('s-verify')">產生給下一位主人的履歷連結</button>
+</section>
+
+<!-- 6 店員端 -->
+<section class="scr" id="s-staff" data-t="店員確認" data-r="IKEA 店員">
+  <div class="alert g">今日預約 6 件：AI 已分流 <b>建議收購 3</b>｜<b>需人看 2</b>｜<b>建議不收 1</b>（示範）</div>
+  <div class="item"><div class="img">📚</div><div><b>兒童書櫃</b><div class="small" id="staffAI">AI：很好（輕微刮痕）｜NT$1,005</div></div></div>
+  <div class="card"><b>實品檢查後的分級</b>
+    <div class="tier" id="staffTier"><div data-i="0"><b>45%</b>全新</div><div data-i="1" class="on"><b>35%</b>很好</div><div data-i="2"><b>25%</b>常用</div></div>
+    <div class="tier" style="grid-template-columns:1fr"><div data-i="3" id="staffNo"><b>不收</b>結構或缺件問題 → 轉先修或再使用</div></div>
+    <div class="small" id="staffNote">與 AI 判斷一致</div></div>
+  <button class="btn d" onclick="staffSign()">確認並簽署（店員 #TC-012）</button>
+</section>
+
+<!-- 7 驗證頁 -->
+<section class="scr" id="s-verify" data-t="履歷驗證" data-r="下一位主人">
+  <p class="small">這是給二手買家看的頁面：看得到家具的紀錄，<b>看不到前主人的姓名、地址</b>。每筆紀錄都由簽署者用自己的金鑰簽章（ECDSA），並與前一筆的雜湊串接：改內容會對不上雜湊；重算雜湊，又沒有簽署者的私鑰可以重簽。</p>
+  <div id="vEvents"></div>
+  <div id="vResult"></div>
+  <button class="btn r" onclick="tamper()">示範一：前主人偷改年份（2023 → 2025）</button>
+  <button class="btn r" onclick="tamper2()">示範二：改年份＋重算全部雜湊</button>
+  <button class="btn g" onclick="resetChain()">還原</button>
+</section>
+
+</main>
+<nav>
+  <button data-s="s-find" class="on"><span>📚</span>我的家具</button>
+  <button data-s="s-photo"><span>📸</span>評估</button>
+  <button data-s="s-staff"><span>🏬</span>店員端</button>
+  <button data-s="s-verify"><span>🔍</span>驗證</button>
+</nav>
+</div>
+<script>
+const ORIG=2500;const RATES=[.45,.35,.25];const NAMES=['全新','很好','常用'];const DESC=['無刮痕','輕微刮痕','多處刮痕'];
+let tier=1, hist=['s-find'];
+const base=[
+ {who:'IKEA 台中店',role:'IKEA',date:'2023/03/12',text:'購買紀錄：兒童書櫃 1 件',owner:'陳＊＊'},
+ {who:'IKEA 台中店 修理服務',role:'IKEA',date:'2025/06/02',text:'更換層板支架 2 個（附照片）'},
+ {who:'本人',role:'本人',date:'2026/11/18',text:'上傳 4 張狀況照片'}
+];
+let chain=[];const KEYS={};const enc=new TextEncoder();
+// 每位簽署者各自持有一把 ECDSA P-256 金鑰（原型在瀏覽器內產生，示範用）
+async function key(who){if(!KEYS[who])KEYS[who]=await crypto.subtle.generateKey({name:'ECDSA',namedCurve:'P-256'},false,['sign','verify']);return KEYS[who]}
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',enc.encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+const G='0'.repeat(64);const body=(prev,e)=>prev+'|'+e.who+'|'+e.date+'|'+e.text;
+async function signed(e,prev){const hash=await sha(body(prev,e));const sig=new Uint8Array(await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'},(await key(e.who)).privateKey,enc.encode(hash)));return {...e,prev,hash,sig}}
+async function build(list){let prev=G;const out=[];for(const e of list){const r=await signed(e,prev);out.push(r);prev=r.hash}return out}
+async function verify(c){let prev=G;const bad={};for(let i=0;i<c.length;i++){const e=c[i];const h=await sha(body(prev,e));
+ if(e.prev!==prev)bad[i]='和前一筆接不上';else if(h!==e.hash)bad[i]='內容和雜湊不符';
+ else if(!(await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},(await key(e.who)).publicKey,e.sig,enc.encode(e.hash))))bad[i]=e.who+' 的簽章驗證失敗';
+ prev=e.hash}return bad}
+function hex(u){return [...u.slice(0,6)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function evHTML(c,bad={},pub=false){return c.map((e,i)=>`<div class="ev ${bad[i]?'bad':''}"><span class="who ${e.role==='本人'?'self':''}">${bad[i]?'✗':'✓'} ${e.who}</span>　${e.date}<br>${e.text}${e.owner&&!pub?`<span class="small">（購買人：${e.owner}）</span>`:''}${e.owner&&pub?`<span class="small">（購買人：已隱藏）</span>`:''}<div class="h">#${e.hash.slice(0,16)}　← 前一筆 #${e.prev.slice(0,16)}<br>簽章 ${hex(e.sig)}…${bad[i]?'<br><b style="color:#ad3f2c">'+bad[i]+'</b>':''}</div></div>`).join('')}
+async function render(){document.getElementById('events').innerHTML=evHTML(chain);const bad=await verify(chain);const n=Object.keys(bad).length;document.getElementById('vEvents').innerHTML=evHTML(chain,bad,true);
+ document.getElementById('vResult').innerHTML=n?`<div class="alert r"><b>⚠ 紀錄被改動過</b><br>第 ${Object.keys(bad).map(i=>+i+1).join('、')} 筆驗證失敗，這份履歷不能當估價依據。</div>`:`<div class="alert g"><b>✓ 驗證通過</b><br>${chain.length} 筆紀錄的雜湊串接與簽章都正確。</div>`;
+ const cb=document.getElementById('chainBadge');cb.className='badge '+(n?'r':'g');cb.textContent=n?'✗ 紀錄被改動過':'✓ 紀錄完整、未被改動'}
+// 竄改一：直接改年份
+async function tamper(){chain[0]={...chain[0],date:'2025/03/12'};await render()}
+// 竄改二：改年份後把所有雜湊重算；拿不到 IKEA 的私鑰，只能沿用舊簽章
+async function tamper2(){const old=chain.slice();let prev=G;chain=[];for(let i=0;i<old.length;i++){const e=i===0?{...old[i],date:'2025/03/12'}:old[i];const hash=await sha(body(prev,e));chain.push({...e,prev,hash,sig:old[i].sig});prev=hash}await render()}
+async function resetChain(){chain=await build(base);await render()}
+async function staffSign(){const e={who:'IKEA 台中店 店員 #TC-012',role:'IKEA',date:'2026/11/23',text:tier===3?'到店驗收：不收，轉先修或再使用':`到店驗收：${NAMES[tier]}，回購 NT$${price(tier).toLocaleString()}`};chain.push(await signed(e,chain[chain.length-1].hash));await render();toast('已簽署，紀錄已加入履歷');go('s-verify')}
+function price(t){return Math.round(ORIG*RATES[t]*1.15/5)*5}
+function setTier(t){tier=t;document.getElementById('staffNo').classList.remove('on');document.querySelectorAll('#tiers div,#staffTier div').forEach(d=>d.classList.toggle('on',+d.dataset.i===t));document.getElementById('pBig').textContent='NT$ '+price(t).toLocaleString();document.getElementById('pWhy').textContent=`原價 NT$2,500 × ${NAMES[t]} ${RATES[t]*100}%｜IKEA Family 會員再加 15%`;document.getElementById('whyTier').textContent=NAMES[t]+'（照片＋自評）'}
+function setAI(){document.getElementById('staffAI').textContent=`AI：${NAMES[aiTier]}（${DESC[aiTier]}）｜NT$${price(aiTier).toLocaleString()}`}
+document.getElementById('staffNo').onclick=()=>{tier=3;document.querySelectorAll('#staffTier div').forEach(x=>x.classList.remove('on'));document.getElementById('staffNo').classList.add('on');document.getElementById('staffNote').textContent='不收：消費者可選擇載回，或由合作單位定期到店收取（規劃中）'};
+document.querySelectorAll('#staffTier div').forEach(d=>d.onclick=()=>{const ai=tier;setTier(+d.dataset.i);document.getElementById('staffNote').textContent=+d.dataset.i===aiTier?'與 AI 判斷一致':'店員修正了 AI 的判斷（會記錄下來，用來校正評分表）'});
+let aiTier=1;
+// photos
+const angles=['正面','側面','背板','五金'];let shot=[0,0,0,0];
+function drawShots(){document.getElementById('shots').innerHTML=angles.map((a,i)=>`<div class="shot ${shot[i]?'ok':''}" onclick="snap(${i})">${shot[i]?'✓ '+a:'📷<br>'+a}</div>`).join('');const all=shot.every(x=>x);const b=document.getElementById('evalBtn');b.disabled=!all;b.style.opacity=all?1:.5;b.textContent=all?'送出評估':'送出評估（拍完 4 張才可送出）'}
+function snap(i){shot[i]=1;drawShots()}
+const ans={wobble:0,parts:0,carry:0};
+document.querySelectorAll('.seg').forEach(s=>s.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{s.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');ans[s.dataset.k]=i}));
+function evaluate(){const rows=[['照片合格（角度、光線）','合格','ok'],['同類家具比對','是書桌','ok'],['表面刮痕','輕微','warn'],['搖晃（使用者自評）',ans.wobble?'有點':'不會',ans.wobble?'warn':'ok'],['零件（使用者自評＋零件清單）',ans.parts?'缺件':'完整',ans.parts?'bad':'ok'],['履歷完整度','3／3 筆有簽署','ok']];
+ document.getElementById('aiRows').innerHTML='<b>評分表</b>'+rows.map(r=>`<div class="row"><span>${r[0]}</span><span class="tag ${r[2]}">${r[1]}</span></div>`).join('');
+ let route='建議收購',cls='g';aiTier=1;if(ans.wobble){aiTier=2;route='需要人看';cls='y'}if(ans.parts){route='建議不收（可先修）';cls='r'}window._reject=!!ans.parts;
+ document.getElementById('aiTier').textContent=NAMES[aiTier]+'（'+DESC[aiTier]+'）';const r=document.getElementById('aiRoute');r.textContent=route;r.className='badge '+cls;setTier(aiTier);setAI();
+ if(ans.carry)toast('不方便自己載：可選「買新收舊」（規劃中）');go('s-ai')}
+function toast(m){const t=document.createElement('div');t.textContent=m;t.style.cssText='position:fixed;left:50%;top:70px;transform:translateX(-50%);background:#1f2a25;color:#fff;padding:10px 14px;border-radius:10px;font-size:14px;z-index:9;max-width:90%';document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+function go(id,push=true){document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id===id));const s=document.getElementById(id);document.getElementById('title').textContent=s.dataset.t;document.getElementById('role').textContent=s.dataset.r;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===id));if(push&&hist[hist.length-1]!==id)hist.push(id);window.scrollTo(0,0)}
+function back(){if(hist.length>1){hist.pop();go(hist[hist.length-1],false)}}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.s));
+(async()=>{chain=await build(base);drawShots();await render();const q=new URLSearchParams(location.search).get('s');if(q){if(q==='s-ai'||q==='s-price'){shot=[1,1,1,1];drawShots();evaluate()}go(q)}const tt=new URLSearchParams(location.search).get('t');if(tt==='1')await tamper();if(tt==='2')await tamper2()})();
+</script>
+</body>
+</html>
